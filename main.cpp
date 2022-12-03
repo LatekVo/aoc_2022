@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include <set>
 
 auto day_1 = [](){
 
@@ -74,6 +75,50 @@ auto day_2 = [](){
     return std::to_string(output);
 };
 
+auto day_3 = [](){
+    std::string input;
+    std::set<char> firstSackContents;
+
+    int output = 0;
+    while (std::getline(std::cin, input)) {
+        int length = input.size() / 2;
+
+        for (int i = 0; i < length; i++) {
+            firstSackContents.insert(input[i]);
+        }
+
+        char res = '\0';
+        for (int i = 0; i < length; i++) {
+            auto it = firstSackContents.find(input[length + i]);
+            if (it != firstSackContents.end()) {
+                res = *it;
+                break;
+            }
+        }
+
+        int i = 0;
+        for (char c = 'a'; c < ('z' + 1); c++) {
+            i++;
+            if (c == res) {
+                output += i;
+                break;
+            }
+        }
+
+        for (char c = 'A'; c < ('Z' + 1); c++) {
+            i++;
+            if (c == res) {
+                output += i;
+                break;
+            }
+        }
+        std::cout << output << '\n';
+        firstSackContents.clear();
+    }
+
+    return std::to_string(output);
+};
+
 /*
 auto day_x = [](){
 
@@ -93,7 +138,7 @@ auto day_x = [](){
 */
 
 int main() {
-    std::string output = day_2();
+    std::string output = day_3();
     std::cout << output << std::endl;
     return 0;
 }
